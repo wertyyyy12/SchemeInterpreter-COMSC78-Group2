@@ -34,7 +34,15 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
-        "*** YOUR CODE HERE ***"
+
+        # Evaluate the procedure   
+        Procedure = env.lookup(expr.first) 
+
+        # Base case. If the value is nil return the expr as a scheme list
+        if(expr.rest is nil):
+            return expr
+        # Evaluate the sub scheme list and evaluate operands based of the procedure.
+        return scheme_apply(Procedure, scheme_eval(expr.rest, env), env)
         # END PROBLEM 3
 
 
@@ -47,6 +55,7 @@ def scheme_apply(procedure, args, env):
     if isinstance(procedure, BuiltinProcedure):
         # BEGIN PROBLEM 2
         "*** YOUR CODE HERE ***"
+        new_args = args.map(procedure)
         # END PROBLEM 2
         try:
             # BEGIN PROBLEM 2
@@ -82,11 +91,7 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    for index in range(0, expressions.__len__() - 2):
-        scheme_eval(expressions.first, env)
-        expressions = expressions.rest
     return scheme_eval(expressions.first, env)  # replace this with lines of your own code
-    
     # END PROBLEM 6
 
 
