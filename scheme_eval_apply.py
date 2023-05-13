@@ -34,7 +34,15 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
-        "*** YOUR CODE HERE ***"
+
+        # Evaluate the procedure
+        Procedure = env.lookup(expr.first)
+
+        # Base case. If the value is nil return the expr as a scheme list
+        if(expr.rest is nil):
+            return expr
+        # Evaluate the sub scheme list and evaluate operands based of the procedure.
+        return scheme_apply(Procedure, scheme_eval(expr.rest, env), env)
         # END PROBLEM 3
 
 
@@ -43,7 +51,7 @@ def scheme_apply(procedure, args, env):
     Frame ENV, the current environment."""
     validate_procedure(procedure)
     if not isinstance(env, Frame):
-       assert False, "Not a Frame: {}".format(env)
+        assert False, "Not a Frame: {}".format(env)
     if isinstance(procedure, BuiltinProcedure):
 
         # BEGIN PROBLEM 2
@@ -56,18 +64,18 @@ def scheme_apply(procedure, args, env):
             py_list.append(args.first)
             # Sets Scheme list to the the remaining elements
             args = args.rest
-        
+
         # need_env: a Boolean flag that indicates whether or not
         # this built-in procedure will need the current environment
-        # to be passed in as the last argument. 
+        # to be passed in as the last argument.
         # The environment is required, for instance,
         # to implement the built-in eval procedure.
 
-        # Flag from scheme_builtins to check if 
+        # Flag from scheme_builtins to check if
         # procedure needs environment or not
         if procedure.need_env is True:
             py_list.append(env)
-    
+
         try:
             # BEGIN PROBLEM 2
             "*** MO'S CODE HERE ***"
@@ -81,9 +89,10 @@ def scheme_apply(procedure, args, env):
             result = procedure.py_func(*py_list)
             return result
             # END PROBLEM 2
-            
+
         except TypeError as err:
-            raise SchemeError('incorrect number of arguments: {0}'.format(procedure))
+            raise SchemeError(
+                'incorrect number of arguments: {0}'.format(procedure))
     elif isinstance(procedure, LambdaProcedure):
         # BEGIN PROBLEM 9
         "*** YOUR CODE HERE ***"
@@ -112,7 +121,8 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    return scheme_eval(expressions.first, env)  # replace this with lines of your own code
+    # replace this with lines of your own code
+    return scheme_eval(expressions.first, env)
     # END PROBLEM 6
 
 
