@@ -1,7 +1,8 @@
-from scheme_eval_apply import *
-from scheme_utils import *
-from scheme_classes import *
 from scheme_builtins import *
+from scheme_utils import *
+
+from scheme_classes import *
+from scheme_eval_apply import *
 
 #################
 # Special Forms #
@@ -31,21 +32,25 @@ def do_define_form(expressions, env):
     >>> scheme_eval(read_line("(f 3)"), env)
     5
     """
-    validate_form(expressions, 2)  # Checks that expressions is a list of length at least 2
+    validate_form(
+        expressions, 2)  # Checks that expressions is a list of length at least 2
     signature = expressions.first
     if scheme_symbolp(signature):
         # assigning a name to a value e.g. (define x (+ 1 2))
-        validate_form(expressions, 2, 2)  # Checks that expressions is a list of length exactly 2
+        # Checks that expressions is a list of length exactly 2
+        validate_form(expressions, 2, 2)
         # BEGIN PROBLEM 4
         "*** YOUR CODE HERE ***"
         # END PROBLEM 4
     elif isinstance(signature, Pair) and scheme_symbolp(signature.first):
         # defining a named procedure e.g. (define (f x y) (+ x y))
         # BEGIN PROBLEM 10
-        "*** YOUR CODE HERE ***"
+        env.define(signature, scheme_eval(expressions.rest, env))
+        return signature
         # END PROBLEM 10
     else:
-        bad_signature = signature.first if isinstance(signature, Pair) else signature
+        bad_signature = signature.first if isinstance(
+            signature, Pair) else signature
         raise SchemeError('non-symbol: {0}'.format(bad_signature))
 
 
@@ -58,7 +63,7 @@ def do_quote_form(expressions, env):
     """
     validate_form(expressions, 1, 1)
     # BEGIN PROBLEM 5
-    print(expressions)
+    return expressions.first
     # END PROBLEM 5
 
 
