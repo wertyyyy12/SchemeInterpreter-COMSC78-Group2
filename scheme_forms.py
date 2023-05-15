@@ -1,8 +1,7 @@
 from scheme_builtins import *
-from scheme_utils import *
-
 from scheme_classes import *
 from scheme_eval_apply import *
+from scheme_utils import *
 
 #################
 # Special Forms #
@@ -127,7 +126,16 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if scheme_nullp(expressions):
+        return True
+    while True:
+        val = scheme_eval(expressions.first, env)
+        if is_scheme_false(val):  # first false value detected
+            return val
+        if not scheme_nullp(expressions.rest):
+            expressions = expressions.rest
+        else:
+            return val  # we have reached the end so return the last value
     # END PROBLEM 12
 
 
@@ -146,7 +154,16 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if scheme_nullp(expressions):
+        return False
+    while True:
+        val = scheme_eval(expressions.first, env)
+        if is_scheme_true(val):  # first true value detected
+            return val
+        if not scheme_nullp(expressions.rest):
+            expressions = expressions.rest
+        else:
+            return val  # we have reached the end so return the last value
     # END PROBLEM 12
 
 
