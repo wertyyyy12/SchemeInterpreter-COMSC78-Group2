@@ -40,7 +40,7 @@ def do_define_form(expressions, env):
         # Checks that expressions is a list of length exactly 2
         validate_form(expressions, 2, 2)
         # BEGIN PROBLEM 4
-        env.define(signature, scheme_eval(expressions.rest, env))
+        env.define(signature, scheme_eval(expressions.rest.first, env))
         return signature
         # END PROBLEM 4
     elif isinstance(signature, Pair) and scheme_symbolp(signature.first):
