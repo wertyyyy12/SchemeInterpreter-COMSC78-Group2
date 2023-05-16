@@ -35,6 +35,7 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
     else:
         # BEGIN PROBLEM 3
         "*** YOUR CODE HERE ***"
+        return scheme_apply(Procedure, scheme_eval(expr.rest, env), env)
         # END PROBLEM 3
 
 
@@ -45,12 +46,41 @@ def scheme_apply(procedure, args, env):
     if not isinstance(env, Frame):
        assert False, "Not a Frame: {}".format(env)
     if isinstance(procedure, BuiltinProcedure):
+
         # BEGIN PROBLEM 2
-        "*** YOUR CODE HERE ***"
-        # END PROBLEM 2
+        "*** MO'S CODE HERE ***"
+        # Convert Scheme list to Python list
+        py_list = []
+        # As long as Scheme list is not empty
+        while args is not nil:
+            # Append first element to py_list
+            py_list.append(args.first)
+            # Sets Scheme list to the the remaining elements
+            args = args.rest
+        
+        # need_env: a Boolean flag that indicates whether or not
+        # this built-in procedure will need the current environment
+        # to be passed in as the last argument. 
+        # The environment is required, for instance,
+        # to implement the built-in eval procedure.
+
+        # Flag from scheme_builtins to check if 
+        # procedure needs environment or not
+        if procedure.need_env is True:
+            py_list.append(env)
+    
         try:
             # BEGIN PROBLEM 2
-            "*** YOUR CODE HERE ***"
+            "*** MO'S CODE HERE ***"
+
+            # py_func: the Python function that implements
+            # the built-in Scheme procedure.
+
+            # Executes the built-in procedure by calling
+            # the Python function that implements the Scheme
+            # procedure, using *py_list to unpack the list of args
+            result = procedure.py_func(*py_list)
+            return result
             # END PROBLEM 2
         except TypeError as err:
             raise SchemeError('incorrect number of arguments: {0}'.format(procedure))
@@ -82,10 +112,11 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    for index in range(0, expressions.__len__() - 2):
+    for i in range(0, expressions.__len__() - 1):
         scheme_eval(expressions.first, env)
         expressions = expressions.rest
-    return scheme_eval(expressions.first, env)  # replace this with lines of your own code
+    
+    return scheme_eval(expressions.first, env) # replace this with lines of your own code
     
     # END PROBLEM 6
 
