@@ -43,7 +43,7 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         if(expr.rest is nil):
             return expr
         # Evaluate the sub scheme list
-        sub_expr = scheme_eval(Procedure, expr.rest, env)
+        sub_expr = scheme_eval(expr.rest, env)
     
         # Checks to see if the procedure is properly binded to a function otherwise. If its not
         # it returns the sub expression.
