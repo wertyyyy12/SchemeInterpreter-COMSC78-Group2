@@ -55,9 +55,28 @@ def scheme_apply(procedure, args, env):
         except TypeError as err:
             raise SchemeError('incorrect number of arguments: {0}'.format(procedure))
     elif isinstance(procedure, LambdaProcedure):
+
         # BEGIN PROBLEM 9
-        "*** YOUR CODE HERE ***"
+        "*** MO'S CODE HERE ***"
+
+        # Create a new Frame instance using make_child_frame function
+        # The new frame is a child of the frame in which the lambda is defined. 
+        child_frame = procedure.make_child_frame(env)
+
+        # Bind formal parameters of lambda procedure and the args passes to scheme_apply
+        # zip() -> Creates an iterator that aggregates elements from procedure.formals & args
+        for formal, actual in zip(procedure.formals, args):
+            # Binds the formal parameter to the # argument value actual
+            child_frame.define(formal, actual) 
+                                               
+        # Evaluate each expression in the body of the procedure using the new frame created
+        eval_result = eval_all(procedure.body, child_frame)
+
+        # Return the evaluated result of evaluating expression in the body of precedure
+        return eval_result
+
         # END PROBLEM 9
+
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
         "*** YOUR CODE HERE ***"
