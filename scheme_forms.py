@@ -40,10 +40,27 @@ def do_define_form(expressions, env):
         "*** YOUR CODE HERE ***"
         # END PROBLEM 4
     elif isinstance(signature, Pair) and scheme_symbolp(signature.first):
+        
         # defining a named procedure e.g. (define (f x y) (+ x y))
         # BEGIN PROBLEM 10
-        "*** YOUR CODE HERE ***"
+        "*** MO'S CODE HERE ***"
+
+        # Extract function name (symbol), formal parameters and body from the signature
+        symbol = signature # The function name (symbol)
+        formals = signature.second # The formal Parameters
+        body = expressions.second # The body of the procedure
+
+        # Create a lambda procedure instance using the formals and body
+        procedure = do_lambda_form(Pair(formals, body), env)
+
+        # Bind the symbol to the created lambda procedure
+        env.define(symbol, procedure)
+
+        # Return the symbol that was bound
+        return symbol
+        
         # END PROBLEM 10
+
     else:
         bad_signature = signature.first if isinstance(signature, Pair) else signature
         raise SchemeError('non-symbol: {0}'.format(bad_signature))
