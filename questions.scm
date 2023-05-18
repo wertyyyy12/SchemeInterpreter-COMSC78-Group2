@@ -15,11 +15,15 @@
 
 ;; Merge two lists LIST1 and LIST2 according to ORDERED? and return
 ;; the merged lists.
-(define (merge ordered? list1 list2)
-  ; BEGIN PROBLEM 16
-  'replace-this-line
-  )
-  ; END PROBLEM 16
+(define (merge ordered? list1 list2) (if (or (null? list1) (null? list2))
+                                  (if (null? list1)
+                                      (if (null? list2)
+                                      '()
+                                      list2)
+                                      list1)
+                                  (if (ordered? (car list1) (car list2))
+                                      (cons (car list1) (merge ordered? (cdr list1) list2))
+                                      (cons (car list2) (merge ordered? list1 (cdr list2))))))
 
 ;; Optional Problem
 
