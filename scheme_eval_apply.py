@@ -113,8 +113,11 @@ def eval_all(expressions, env):
     """
     # BEGIN PROBLEM 6
     for i in range(0, expressions.__len__() - 1):
-        scheme_eval(expressions.first, env)
-        expressions = expressions.rest
+        if expressions.first == nil:
+            return None
+        else:
+            scheme_eval(expressions.first, env)
+            expressions = expressions.rest
     
     return scheme_eval(expressions.first, env) # replace this with lines of your own code
     
