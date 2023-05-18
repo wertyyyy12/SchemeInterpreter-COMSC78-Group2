@@ -64,6 +64,7 @@ def scheme_apply(procedure, args, env):
             py_list.append(args.first)
             # Sets Scheme list to the the remaining elements
             args = args.rest
+<<<<<<< HEAD
 
         # need_env: a Boolean flag that indicates whether or not
         # this built-in procedure will need the current environment
@@ -76,6 +77,20 @@ def scheme_apply(procedure, args, env):
         if procedure.need_env is True:
             py_list.append(env)
 
+=======
+        
+        # need_env: a Boolean flag that indicates whether or not
+        # this built-in procedure will need the current environment
+        # to be passed in as the last argument. 
+        # The environment is required, for instance,
+        # to implement the built-in eval procedure.
+
+        # Flag from scheme_builtins to check if 
+        # procedure needs environment or not
+        if procedure.need_env is True:
+            py_list.append(env)
+    
+>>>>>>> problem13.2
         try:
             # BEGIN PROBLEM 2
             "*** MO'S CODE HERE ***"
@@ -143,8 +158,17 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
+<<<<<<< HEAD
     # replace this with lines of your own code
     return scheme_eval(expressions.first, env)
+=======
+    for i in range(0, expressions.__len__() - 1):
+        scheme_eval(expressions.first, env)
+        expressions = expressions.rest
+    
+    return scheme_eval(expressions.first, env) # replace this with lines of your own code
+    
+>>>>>>> problem13.2
     # END PROBLEM 6
 
 
