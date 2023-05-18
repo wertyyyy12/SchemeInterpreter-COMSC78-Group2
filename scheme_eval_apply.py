@@ -79,10 +79,13 @@ def scheme_apply(procedure, args, env):
 
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
-        "*** YOUR CODE HERE ***"
+        "*** MO'S CODE HERE ***"
+        #Evaluate the body in the environment with provided arguments
+        return scheme_eval(procedure.body, env.make_child_frame([], args))
         # END PROBLEM 11
+
     else:
-        assert False, "Unexpected procedure: {}".format(procedure)
+        assert False, "Unexpectzed procedure: {}".format(procedure)
 
 
 def eval_all(expressions, env):
