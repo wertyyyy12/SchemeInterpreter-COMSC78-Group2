@@ -1,7 +1,8 @@
 from scheme_builtins import *
+from scheme_utils import *
+
 from scheme_classes import *
 from scheme_eval_apply import *
-from scheme_utils import *
 
 #################
 # Special Forms #
@@ -43,15 +44,15 @@ def do_define_form(expressions, env):
         return signature
         # END PROBLEM 4
     elif isinstance(signature, Pair) and scheme_symbolp(signature.first):
-        
+
         # defining a named procedure e.g. (define (f x y) (+ x y))
         # BEGIN PROBLEM 10
         "*** MO'S CODE HERE ***"
 
         # Extract function name (symbol), formal parameters and body from the signature
-        symbol = signature # The function name (symbol)
-        formals = signature.second # The formal Parameters
-        body = expressions.second # The body of the procedure
+        symbol = signature  # The function name (symbol)
+        formals = signature.second  # The formal Parameters
+        body = expressions.second  # The body of the procedure
 
         # Create a lambda procedure instance using the formals and body
         procedure = do_lambda_form(Pair(formals, body), env)
@@ -61,7 +62,7 @@ def do_define_form(expressions, env):
 
         # Return the symbol that was bound
         return symbol
-        
+
         # END PROBLEM 10
 
     else:
@@ -200,12 +201,12 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
-            "*** YOUR CODE HERE ***"
             if (clause.rest != nil):
 
-                return eval_all(clause.rest, env) 
+                return eval_all(clause.rest, env)
             else:
                 return test
+
             # END PROBLEM 13
         expressions = expressions.rest
 
@@ -269,25 +270,25 @@ def do_unquote(expressions, env):
 
 def do_mu_form(expressions, env):
     """Evaluate a mu form."""
-    validate_form(expressions, 2) # Ensure the has two expressions
-    formals = expressions.first # Extract formal parameters from mu expression
-    validate_formals(formals) # Validates the structure
+    validate_form(expressions, 2)  # Ensure the has two expressions
+    formals = expressions.first  # Extract formal parameters from mu expression
+    validate_formals(formals)  # Validates the structure
 
     # BEGIN PROBLEM 11
     "*** MO'S CODE HERE ***"
 
-    def mu_body(*args): # Defines a function called mu_body
+    def mu_body(*args):  # Defines a function called mu_body
 
         # Create new frame using make_child_frame on environemt
         # Binds formal parameters to arguments passes in mu_body
-        frame = env.make_child_frame(formals, args) 
+        frame = env.make_child_frame(formals, args)
 
         # Initialize result to none \
         result = None
 
         # itereates over the body of mu to evaluate each expression
         for expr in expressions.second:
-            #Evaluates each expression in the body using scheme_eval
+            # Evaluates each expression in the body using scheme_eval
             # frame is the environment where the expression is evaluated
             result = scheme_eval(expr, frame)
 
@@ -298,6 +299,7 @@ def do_mu_form(expressions, env):
     return MuProcedure(mu_body, len(formals))
 
     # END PROBLEM 11
+
 
 SPECIAL_FORMS = {
     'and': do_and_form,
