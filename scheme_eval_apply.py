@@ -34,6 +34,10 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
+        # If the the element is a sub expression bind the first element to the result of the evaluated subexpression
+        if(isinstance(expr.first, Pair)):
+            expr.first = scheme_eval(expr.first, env)
+        
         Procedure = None
         # Evaluate the procedure  
         if scheme_symbolp(expr.first):
@@ -51,6 +55,7 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
             return expr
         else:
             return scheme_apply(Procedure, expr.rest, env)
+    
         # END PROBLEM 3
 
 
