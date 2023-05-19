@@ -34,15 +34,28 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
+        # If the the element is a sub expression bind the first element to the result of the evaluated subexpression
+        if(isinstance(expr.first, Pair)):
+            expr.first = scheme_eval(expr.first, env)
 
+        Procedure = None
         # Evaluate the procedure
-        Procedure = env.lookup(expr.first)
+        if scheme_symbolp(expr.first):
+            Procedure = env.lookup(expr.first)
 
         # Base case. If the value is nil return the expr as a scheme list
         if(expr.rest is nil):
             return expr
-        # Evaluate the sub scheme list and evaluate operands based of the procedure.
-        return scheme_apply(Procedure, scheme_eval(expr.rest, env), env)
+        # Evaluate the sub scheme list
+        sub_expr = scheme_eval(expr.rest, env)
+
+        # Checks to see if the procedure is properly binded to a function otherwise. If its not
+        # it returns the sub expression.
+        if(Procedure is None):
+            return expr
+        else:
+            return scheme_apply(Procedure, expr.rest, env)
+
         # END PROBLEM 3
 
 
@@ -64,7 +77,6 @@ def scheme_apply(procedure, args, env):
             py_list.append(args.first)
             # Sets Scheme list to the the remaining elements
             args = args.rest
-<<<<<<< HEAD
 
         # need_env: a Boolean flag that indicates whether or not
         # this built-in procedure will need the current environment
@@ -77,20 +89,6 @@ def scheme_apply(procedure, args, env):
         if procedure.need_env is True:
             py_list.append(env)
 
-=======
-        
-        # need_env: a Boolean flag that indicates whether or not
-        # this built-in procedure will need the current environment
-        # to be passed in as the last argument. 
-        # The environment is required, for instance,
-        # to implement the built-in eval procedure.
-
-        # Flag from scheme_builtins to check if 
-        # procedure needs environment or not
-        if procedure.need_env is True:
-            py_list.append(env)
-    
->>>>>>> problem13.2
         try:
             # BEGIN PROBLEM 2
             "*** MO'S CODE HERE ***"
@@ -114,15 +112,15 @@ def scheme_apply(procedure, args, env):
         "*** MO'S CODE HERE ***"
 
         # Create a new Frame instance using make_child_frame function
-        # The new frame is a child of the frame in which the lambda is defined. 
+        # The new frame is a child of the frame in which the lambda is defined.
         child_frame = procedure.make_child_frame(env)
 
         # Bind formal parameters of lambda procedure and the args passes to scheme_apply
         # zip() -> Creates an iterator that aggregates elements from procedure.formals & args
         for formal, actual in zip(procedure.formals, args):
             # Binds the formal parameter to the # argument value actual
-            child_frame.define(formal, actual) 
-                                               
+            child_frame.define(formal, actual)
+
         # Evaluate each expression in the body of the procedure using the new frame created
         eval_result = eval_all(procedure.body, child_frame)
 
@@ -134,7 +132,7 @@ def scheme_apply(procedure, args, env):
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
         "*** MO'S CODE HERE ***"
-        #Evaluate the body in the environment with provided arguments
+        # Evaluate the body in the environment with provided arguments
         return scheme_eval(procedure.body, env.make_child_frame([], args))
         # END PROBLEM 11
 
@@ -158,20 +156,16 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-<<<<<<< HEAD
-    # replace this with lines of your own code
-    return scheme_eval(expressions.first, env)
-=======
     for i in range(0, expressions.__len__() - 1):
         if expressions.first == nil:
             return None
         else:
             scheme_eval(expressions.first, env)
             expressions = expressions.rest
-    
-    return scheme_eval(expressions.first, env) # replace this with lines of your own code
-    
->>>>>>> problem13.2
+
+    # replace this with lines of your own code
+    return scheme_eval(expressions.first, env)
+
     # END PROBLEM 6
 
 
