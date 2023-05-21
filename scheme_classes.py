@@ -103,6 +103,7 @@ class LambdaProcedure(Procedure):
         assert isinstance(env, Frame), "env must be of type Frame"
 
         from scheme_utils import scheme_listp, validate_type
+        validate_type(formals, scheme_listp, 0, 'LambdaProcedure')
         validate_type(body, scheme_listp, 1, 'LambdaProcedure')
         self.formals = formals
         self.body = body
