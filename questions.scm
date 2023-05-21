@@ -5,11 +5,22 @@
 
 ;; Problem 15
 ;; Returns a list of two-element lists
+
+;; Define new procedure 'enumerate' takes parameter s 
+;; representing the input list
 (define (enumerate s)
   ; BEGIN PROBLEM 15
-  'replace-this-line
-  )
-  ; END PROBLEM 15
+
+  ;; create a recursive helper procedure takes 3 parameters
+  ;; list s, index starts with 0, empty result
+  (let loop ((lst s) (index 0) (result '()))
+    ;; If reached empty list, reverse the result
+    (cond ((null? lst) (reverse result))
+      ;; Otherwise, keep calling the loop procedure, use cdr to get the last element in the pair
+      ;; add 1 to the index, and construct a list with two-elements, 
+      ;; Index and Value, EX (0 5), where 0 is index and 5 is value
+      ;; Finally, return the result
+      (else (loop (cdr lst) (+ index 1) (cons (list index (car lst)) result ))))))
 
 ;; Problem 16
 
