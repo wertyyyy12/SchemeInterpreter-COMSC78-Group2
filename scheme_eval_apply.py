@@ -34,28 +34,9 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
-        # If the the element is a sub expression bind the first element to the result of the evaluated subexpression
-        if(isinstance(expr.first, Pair)):
-            expr.first = scheme_eval(expr.first, env)
-
-        Procedure = None
-        # Evaluate the procedure
-        if scheme_symbolp(expr.first):
-            Procedure = env.lookup(expr.first)
-
-        # Base case. If the value is nil return the expr as a scheme list
-        if(expr.rest is nil):
-            return expr
-        # Evaluate the sub scheme list
-        sub_expr = scheme_eval(expr.rest, env)
-
-        # Checks to see if the procedure is properly binded to a function otherwise. If its not
-        # it returns the sub expression.
-        if(Procedure is None):
-            return expr
-        else:
-            return scheme_apply(Procedure, expr.rest, env)
-
+        operator = scheme_eval(expr.first, env)
+        args = expr.rest.map(lambda arg: scheme_eval(arg, env))
+        return scheme_apply(operator, args, env)
         # END PROBLEM 3
 
 
