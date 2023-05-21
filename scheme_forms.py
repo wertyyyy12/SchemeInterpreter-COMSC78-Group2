@@ -50,9 +50,10 @@ def do_define_form(expressions, env):
         "*** MO'S CODE HERE ***"
 
         # Extract function name (symbol), formal parameters and body from the signature
-        symbol = signature  # The function name (symbol)
-        formals = signature.second  # The formal Parameters
-        body = expressions.second  # The body of the procedure
+        symbol = signature.first  # The function name (symbol)
+        formals = signature.rest  # The formal Parameters
+        body = expressions.rest  # The body of the procedure
+
 
         # Create a lambda procedure instance using the formals and body
         procedure = do_lambda_form(Pair(formals, body), env)
