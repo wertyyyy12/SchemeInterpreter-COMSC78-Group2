@@ -52,7 +52,20 @@ class Frame:
         if len(formals) != len(vals):
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 8
-        "*** YOUR CODE HERE ***"
+        child_frame = Frame(self)
+
+        # For each corresponding element bind the symbols to the values in that child frame.
+        def bind_list(formals, vals):
+            if formals.rest is nil:
+                return child_frame.define(formals.first, vals.first)
+
+            child_frame.define(formals.first, vals.first)
+
+            return bind_list(formals.rest, vals.rest)
+
+        bind_list(formals, vals)
+
+        return child_frame
         # END PROBLEM 8
 
 ##############
@@ -85,8 +98,7 @@ class LambdaProcedure(Procedure):
         starts with Frame ENV."""
         assert isinstance(env, Frame), "env must be of type Frame"
 
-        from scheme_utils import validate_type, scheme_listp
-        validate_type(formals, scheme_listp, 0, 'LambdaProcedure')
+        from scheme_utils import scheme_listp, validate_type
         validate_type(body, scheme_listp, 1, 'LambdaProcedure')
         self.formals = formals
         self.body = body
