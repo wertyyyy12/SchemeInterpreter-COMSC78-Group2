@@ -8,6 +8,7 @@
 
 ;; Define new procedure 'enumerate' takes parameter s 
 ;; representing the input list
+;; Authors: Mohammed Nassar, Akilan Babu 
 (define (enumerate s)
   ; BEGIN PROBLEM 15
   ; ; create a recursive helper procedure takes 3 parameters
@@ -23,13 +24,14 @@
 
 ;; Merge two lists LIST1 and LIST2 according to ORDERED? and return
 ;; the merged lists.
-(define (merge ordered? list1 list2) (if (or (null? list1) (null? list2))
+;; Authors: Akilan Babu
+(define (merge ordered? list1 list2) (if (or (null? list1) (null? list2)) ;; if either list is null, just merge the remainder of the other list. if both lists are empty, we are done merging so return '() to signify the end
                                   (if (null? list1)
                                       (if (null? list2)
                                       '()
                                       list2)
                                       list1)
-                                  (if (ordered? (car list1) (car list2))
+                                  (if (ordered? (car list1) (car list2)) ;; we know that both lists have an element in them, so cons the element ordered first before merging the remainder of both lists
                                       (cons (car list1) (merge ordered? (cdr list1) list2))
                                       (cons (car list2) (merge ordered? list1 (cdr list2))))))
 

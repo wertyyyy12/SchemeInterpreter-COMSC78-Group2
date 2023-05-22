@@ -61,8 +61,9 @@ class Frame:
         if len(formals) != len(vals):
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 8
+        # Authors: Ruben Jarquin, Akilan Babu
         child_frame = Frame(self)
-        if formals is nil:
+        if formals is nil: # return an unaltered child_frame if there's nothing to bind
             return child_frame
 
         # For each corresponding element bind the symbols to the values in that child frame.

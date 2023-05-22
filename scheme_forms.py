@@ -40,13 +40,15 @@ def do_define_form(expressions, env):
         # Checks that expressions is a list of length exactly 2
         validate_form(expressions, 2, 2)
         # BEGIN PROBLEM 4
-        env.define(signature, scheme_eval(expressions.rest.first, env))
+        # Authors: Akilan Babu
+        env.define(signature, scheme_eval(expressions.rest.first, env)) # define the symbol with its value
         return signature
         # END PROBLEM 4
     elif isinstance(signature, Pair) and scheme_symbolp(signature.first):
 
         # defining a named procedure e.g. (define (f x y) (+ x y))
         # BEGIN PROBLEM 10
+        # Authors: Mohammed Nassar, Akilan Babu
         "*** MO'S CODE HERE ***"
 
         # Extract function name (symbol), formal parameters and body from the signature
@@ -81,7 +83,8 @@ def do_quote_form(expressions, env):
     """
     validate_form(expressions, 1, 1)
     # BEGIN PROBLEM 5
-    return expressions.first
+    # Author: Akilan
+    return expressions.first # just return the value without evaluating
     # END PROBLEM 5
 
 
@@ -109,6 +112,7 @@ def do_lambda_form(expressions, env):
     formals = expressions.first
     validate_formals(formals)
     # BEGIN PROBLEM 7
+    # Authors: Akilan Babu
     return LambdaProcedure(formals, expressions.rest, env)
     # END PROBLEM 7
 
@@ -144,6 +148,7 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
+    # Authors: Akilan Babu
     if scheme_nullp(expressions):
         return True
     while True:
@@ -172,6 +177,7 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
+    # Authors: Akilan Babu
     if scheme_nullp(expressions):
         return False
     while True:
@@ -296,8 +302,8 @@ def do_mu_form(expressions, env):
 
     # BEGIN PROBLEM 11
     "*** MO'S CODE HERE ***"
-
-    # Creates a new object instance of MuProcedure and length of formal parameters
+    # Authors: Mohammed Nassar
+    # Creates an instance of MuProcedure with the formal parameters and body. 
     return MuProcedure(formals, expressions.rest)
 
     # END PROBLEM 11
