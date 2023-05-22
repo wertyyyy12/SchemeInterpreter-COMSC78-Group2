@@ -125,14 +125,20 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
+    #Chris' Code
+    #return None if the Pair is nil
     if expressions is nil:
         return None
     else:
+        #Creatting a mutable copy
         curr = expressions.rest
+        #evaling the first expression
         last_result = scheme_eval(expressions.first, env)
         while curr is not nil:
+            #evaling every other valid expression
             last_result = scheme_eval(curr.first, env)
             curr = curr.rest
+        #Returning the last expression
         return last_result
 
     # END PROBLEM 6
