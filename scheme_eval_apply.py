@@ -34,9 +34,10 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
-        operator = scheme_eval(expr.first, env)
-        args = expr.rest.map(lambda arg: scheme_eval(arg, env))
-        return scheme_apply(operator, args, env)
+        # Authors: Akilan Babu, Ruben Jarquin
+        operator = scheme_eval(expr.first, env) # evaluate the operator
+        args = expr.rest.map(lambda arg: scheme_eval(arg, env)) # evaluate each of the operands in turn
+        return scheme_apply(operator, args, env) # apply the operator to the operands
         # END PROBLEM 3
 
 
@@ -90,8 +91,9 @@ def scheme_apply(procedure, args, env):
     elif isinstance(procedure, LambdaProcedure):
 
         # BEGIN PROBLEM 9
-        child_frame = procedure.env.make_child_frame(procedure.formals, args)
-        eval_result = eval_all(procedure.body, child_frame)
+        # Authors: Mohammed Nassar, Akilan Babu
+        child_frame = procedure.env.make_child_frame(procedure.formals, args) # make a child frame and bind the formal parameters to the arg values (which were evaluated in scheme_eval, problem 3)
+        eval_result = eval_all(procedure.body, child_frame) # evaluate all expressions in the function body and return the last result (i.e. begin special form)
 
         # Return the evaluated result of evaluating expression in the body of precedure
         return eval_result
@@ -100,7 +102,7 @@ def scheme_apply(procedure, args, env):
 
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
-        "*** MO'S CODE HERE ***"
+        # Authors: Akilan Babu, Mohammed Nassar
         # Evaluate the body in the environment with provided arguments
         return eval_all(procedure.body, env.make_child_frame(procedure.formals, args))
         # END PROBLEM 11
@@ -125,20 +127,15 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    #Chris' Code
-    #return None if the Pair is nil
-    if expressions is nil:
+    # Authors: Chris Sepka, Akilan Babu
+    if expressions is nil: # return None (i.e. scheme undefined) if there's no expressions to evaluate
         return None
     else:
-        #Creatting a mutable copy
-        curr = expressions.rest
-        #evaling the first expression
-        last_result = scheme_eval(expressions.first, env)
+        curr = expressions.rest # creating a mutable copy
+        last_result = scheme_eval(expressions.first, env) # evaluate all expressions in turn and return the last result
         while curr is not nil:
-            #evaling every other valid expression
             last_result = scheme_eval(curr.first, env)
             curr = curr.rest
-        #Returning the last expression
         return last_result
 
     # END PROBLEM 6
