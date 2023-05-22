@@ -233,7 +233,19 @@ def make_let_frame(bindings, env):
         raise SchemeError('bad bindings list in let form')
     names = vals = nil
     # BEGIN PROBLEM 14
-    "*** YOUR CODE HERE ***"
+    "*** Chris' Code ***"
+    currentBinding = bindings
+    while currentBinding.first is not nil:
+        names = Pair(currentBinding.first.first, names)
+        vals = Pair(scheme_eval(currentBinding.first.rest.first, env), vals)
+        if(currentBinding.rest is not nil):
+            currentBinding = currentBinding.rest
+        else:
+            break
+
+    validate_form(names, 1)
+    validate_form(vals, 1)
+
     # END PROBLEM 14
     return env.make_child_frame(names, vals)
 
