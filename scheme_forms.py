@@ -234,16 +234,23 @@ def make_let_frame(bindings, env):
     names = vals = nil
     # BEGIN PROBLEM 14
     "*** Chris' Code ***"
+    #Copying bindings to mutable variable
     currentBinding = bindings
+    #Looping through all valid bindings
     while currentBinding.first is not nil:
+        #appending name pair with the correct name
         names = Pair(currentBinding.first.first, names)
+        #appending vals with thr correct val
         vals = Pair(scheme_eval(currentBinding.first.rest.first, env), vals)
+        #Moving to next binding if possible
         if(currentBinding.rest is not nil):
             currentBinding = currentBinding.rest
         else:
+            #Breaking loop if there are no more bindings
             break
-
+    #Validating that there is al least one name
     validate_form(names, 1)
+    #Validating that there is at least one val
     validate_form(vals, 1)
 
     # END PROBLEM 14
