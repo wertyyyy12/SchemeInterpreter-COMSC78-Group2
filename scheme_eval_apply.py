@@ -125,15 +125,15 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    for i in range(0, expressions.__len__() - 1):
-        if expressions.first == nil:
-            return None
-        else:
-            scheme_eval(expressions.first, env)
-            expressions = expressions.rest
-
-    # replace this with lines of your own code
-    return scheme_eval(expressions.first, env)
+    if expressions is nil:
+        return None
+    else:
+        curr = expressions.rest
+        last_result = scheme_eval(expressions.first, env)
+        while curr is not nil:
+            last_result = scheme_eval(curr.first, env)
+            curr = curr.rest
+        return last_result
 
     # END PROBLEM 6
 
