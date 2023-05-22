@@ -102,7 +102,7 @@ def scheme_apply(procedure, args, env):
         # BEGIN PROBLEM 11
         "*** MO'S CODE HERE ***"
         # Evaluate the body in the environment with provided arguments
-        return scheme_eval(procedure.body, env.make_child_frame([], args))
+        return eval_all(procedure.body, env.make_child_frame(procedure.formals, args))
         # END PROBLEM 11
 
     else:

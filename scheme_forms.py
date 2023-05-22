@@ -278,26 +278,8 @@ def do_mu_form(expressions, env):
     # BEGIN PROBLEM 11
     "*** MO'S CODE HERE ***"
 
-    def mu_body(*args):  # Defines a function called mu_body
-
-        # Create new frame using make_child_frame on environemt
-        # Binds formal parameters to arguments passes in mu_body
-        frame = env.make_child_frame(formals, args)
-
-        # Initialize result to none \
-        result = None
-
-        # itereates over the body of mu to evaluate each expression
-        for expr in expressions.second:
-            # Evaluates each expression in the body using scheme_eval
-            # frame is the environment where the expression is evaluated
-            result = scheme_eval(expr, frame)
-
-        # Return the result of evaluating the body expression
-        return result
-
     # Creates a new object instance of MuProcedure and length of formal parameters
-    return MuProcedure(mu_body, len(formals))
+    return MuProcedure(formals, expressions.rest)
 
     # END PROBLEM 11
 

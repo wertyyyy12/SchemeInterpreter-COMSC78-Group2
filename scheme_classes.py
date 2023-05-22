@@ -57,6 +57,8 @@ class Frame:
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 8
         child_frame = Frame(self)
+        if formals is nil:
+            return child_frame
 
         # For each corresponding element bind the symbols to the values in that child frame.
         def bind_list(formals, vals):
