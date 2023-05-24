@@ -244,6 +244,7 @@ def make_let_frame(bindings, env):
     currentBinding = bindings
     #Looping through all valid bindings
     while currentBinding.first is not nil:
+        validate_form(currentBinding.first, 2, 2)
         #appending name pair with the correct name
         names = Pair(currentBinding.first.first, names)
         #appending vals with thr correct val
@@ -258,6 +259,8 @@ def make_let_frame(bindings, env):
     validate_form(names, 1)
     #Validating that there is at least one val
     validate_form(vals, 1)
+    # validating that there are a distinct collection of formals to bind
+    validate_formals(names)
 
     # END PROBLEM 14
     return env.make_child_frame(names, vals)
